@@ -1,1 +1,0 @@
-export * as logger from 'https://deno.land/std@0.78.0/log/mod.ts'
