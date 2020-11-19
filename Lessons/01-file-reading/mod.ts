@@ -1,17 +1,19 @@
 import { join } from 'https://deno.land/std/path/mod.ts'
+import { BufReader } from 'https://deno.land/std/io/bufio.ts'
+import { parse } from 'https://deno.land/std/encoding/csv.ts'
 
-async function readFile() {
-  const path = join('src', 'heeeellloo.txt')
-  const data = await Deno.readTextFile(path)
-  console.log(data)
+async function loadPlanetsData() {
+  const path = join('.', 'src', 'kepler_exoplanets_nasa.csv')
+
+  const file = await Deno.open(path)
+  const bufReader = new BufReader(file)
+  const result = await parse(bufReader, {
+    comment: '#',
+  })
+
+  Deno.close(file.rid)
+
+  console.log(result)
 }
 
-await readFile()
-
-async function readDir() {
-  for await (const dirEntry of Deno.readDir('./')) {
-    console.log(dirEntry.name, dirEntry.isSymlink)
-  }
-}
-
-await readDir()
+await loadPlanetsData()
