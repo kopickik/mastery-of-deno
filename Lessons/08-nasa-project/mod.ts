@@ -5,7 +5,7 @@ const app = new Application()
 const PORT = 8000
 
 app.use(async (ctx, next) => {
-  console.log(`${ctx.request.method}::${ctx.request.url}`)
+  log.info(`${ctx.request.method}::${ctx.request.url}`)
   await next()
 })
 
